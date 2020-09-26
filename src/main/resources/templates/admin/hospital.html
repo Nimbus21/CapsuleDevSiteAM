@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Lista de hospitais cadastrados</h1>
+<table>
+				<thead>
+					<tr>
+						<th>Nome</th>
+						<th>Cnpj</th>
+						<th>Endereço</th>
+						<th>Telefone</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="hospital: ${hospitais}">
+						<tr>
+							<td th:text="${hospital.nome}"></td>
+							<td th:text="${hospital.cnpj}"></td>
+							<td th:text="${hospital.endereco}"></td>
+							<td th:text="${hospital.telefone}"></td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Página do paciente logado</h1>
+
+<p>Bem vindo, <span th:text="${paciente.nome}"></span>!</p>
+<h2>Lista de monitoramentos</h2>
+<p th:text="${paciente.monitoramentos[0].codigo}">
+</body>
+</html>
