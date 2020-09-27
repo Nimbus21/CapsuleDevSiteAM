@@ -17,6 +17,6 @@ public class HospitalController {
 		RestTemplate api = new RestTemplate();
 		List<?> hospitais = api.getForObject("https://capsuledevdigital01.herokuapp.com/hospital", List.class);
 		model.addAttribute("hospitais", hospitais);
-		return "admin/hospital";
+		return "admin/index";
 	}
 }

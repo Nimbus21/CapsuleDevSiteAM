@@ -7,6 +7,7 @@ public class Monitoramento {
 	private Long codigo;
 	private Date inicio;
 	private Date fim;
+	private Paciente paciente;
 	
 	public Long getCodigo() {
 		return codigo;
@@ -26,6 +27,11 @@ public class Monitoramento {
 	public void setFim(Date fim) {
 		this.fim = fim;
 	}
-	
+	public Paciente getPaciente() {
+		return paciente;
+	}
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
 	
 }

@@ -1,6 +1,6 @@
 package br.com.fiap.capsuledev.domain;
 
-public class PacienteUsuario {
+public class Usuario {
 	private Long codigo;
 	private String email;
 	private String senha;
