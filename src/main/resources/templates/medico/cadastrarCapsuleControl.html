@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Cadastro de nova capsuleControl</h1>
+	<form action="/loginMedico/monitoramento/cadastrarCapsuleControl/confirm" method="post">
+		<input type="hidden" name="codigoMonitoramento" th:value="${codigo}">
+		<label for="remedio">Medicamento:</label>
+		<input type="text" name="remedio" id="remedio"><br>
+		<label for="dose">Dosagem:</label>
+		<input type="text" name="dose" id="dose"><br>
+		<input type="submit" value="Enviar">
+	</form>
+</body>
+</html>

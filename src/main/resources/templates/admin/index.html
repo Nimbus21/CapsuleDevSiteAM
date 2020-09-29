@@ -12,7 +12,9 @@
 						<th>Nome</th>
 						<th>Cnpj</th>
 						<th>Endereço</th>
+						<th>Inscrição estadual</th>
 						<th>Telefone</th>
+						<th colspan="2"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -21,10 +23,61 @@
 							<td th:text="${hospital.nome}"></td>
 							<td th:text="${hospital.cnpj}"></td>
 							<td th:text="${hospital.endereco}"></td>
+							<td th:text="${hospital.inscricaoEstadual}"></td>
 							<td th:text="${hospital.telefone}"></td>
+							<td>
+								<form th:action="@{/loginAdmin/editarHospital}" method="post">
+									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
+									<input type="submit" value="Edit">
+								</form>
+							</td>
+							<td>
+								<form th:action="@{/loginAdmin/excluirHospital}" method="post">
+									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
+									<input type="submit" value="Destroy">
+								</form>
+							</td>
 						</tr>
 					</th:block>
 				</tbody>
 			</table>
+<h2>Cadastrar novo hospital</h2>
+	<div th:if="${msg != null}" th:text="${msg}"></div>
+<!-- 	<th:block th:if="${hospitalEditavel == null}"> -->
+	<form action="/loginAdmin/cadastrarHospital" method="post">
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome" id="nome"><br>
+		<label for="cnpj">CNPJ:</label>
+		<input type="text" name="cnpj" id="cnpj"><br>
+		<label for="endereco">Endereço:</label>
+		<input type="text" name="endereco" id="endereco"><br>
+		<label for="inscricaoEstadual">Inscrição estadual:</label>
+		<input type="text" name = "inscricaoEstadual" id="inscricaoEstadual"><br>
+		<label for="telefone">Telefone:</label>
+		<input type="text" name = "telefone" id="telefone"><br>
+		<button type="submit">Adicionar</button>
+	</form>
+<!-- 	</th:block> -->
+	<th:block th:if="${hospitalEditavel != null}">
+	<h2>Editar hospital <span th:text="${hospitalEditavel.nome}"></span></h2>
+	<form action="/loginAdmin/cadastrarHospital" method="post">
+		<input type="hidden" name="codigo" th:value="${hospitalEditavel.codigo}">
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome" id="nome" th:value="${hospitalEditavel.nome}"><br>
+		<label for="cnpj">CNPJ:</label>
+		<input type="text" name="cnpj" id="cnpj" th:value="${hospitalEditavel.cnpj}"><br>
+		<label for="endereco">Endereço:</label>
+		<input type="text" name="endereco" id="endereco" th:value="${hospitalEditavel.endereco}"><br>
+		<label for="inscricaoEstadual">Inscrição estadual:</label>
+		<input type="text" name = "inscricaoEstadual" id="inscricaoEstadual" th:value="${hospitalEditavel.inscricaoEstadual}"><br>
+		<label for="telefone">Telefone:</label>
+		<input type="text" name = "telefone" id="telefone" th:value="${hospitalEditavel.telefone}"><br>
+		<button type="submit">Editar</button>
+	</form>
+	</th:block>
+	<h1>Lista de pacientes cadastrados</h1>
+	<th:block th:each="paciente: ${pacientes}">
+		<p th:text="${paciente.nome}"></p>
+	</th:block>
 </body>
 </html>

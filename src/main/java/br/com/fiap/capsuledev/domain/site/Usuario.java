@@ -1,4 +1,4 @@
-package br.com.fiap.capsuledev.domain;
+package br.com.fiap.capsuledev.domain.site;
 
 public class Usuario {
 	private Long codigo;

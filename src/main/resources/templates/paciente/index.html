@@ -8,7 +8,11 @@
 <h1>Página do paciente logado</h1>
 
 <p>Bem vindo, <span th:text="${paciente.nome}"></span>!</p>
-<h2>Lista de monitoramentos</h2>
-<p th:text="${paciente.monitoramentos[0].codigo}">
+<h2>Lista dos seus monitoramentos</h2>
+	<th:block th:each="monitoramento: ${paciente.monitoramentos}">
+		<form th:action="@{'/loginPaciente/monitoramento/' + ${monitoramento.codigo}}" method=post>
+			<input type="submit" th:value="${monitoramento.codigo}">
+		</form>
+	</th:block>
 </body>
 </html>

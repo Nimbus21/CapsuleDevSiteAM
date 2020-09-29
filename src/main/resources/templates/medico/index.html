@@ -8,11 +8,17 @@
 <h1>Página do médico logado</h1>
 <p>Bem vindo, dr. <span th:text="${medico.nome}"></span>!</p>
 <h2>Lista dos seus pacientes</h2>
-<th:block th:each="paciente: ${pacientesMedico}">
-<form th:action="@{'/loginMedico/paciente/' + ${paciente.codigo}}" method="post">
-<!-- 	<p th:text="${paciente.nome}"></p> -->
-	<input type="submit" th:value="${paciente.nome}">
-</form>
-</th:block>
+	<th:block th:each="paciente: ${pacientesMedico}">
+		<form th:action="@{'/loginMedico/paciente/' + ${paciente.codigo}}" method="post">
+			<!-- 	<p th:text="${paciente.nome}"></p> -->
+			<input type="submit" th:value="${paciente.nome}">
+		</form>
+	</th:block>
+<h2>Lista de todos os seus monitoramentos</h2>
+	<th:block th:each="monitoramento: ${medico.monitoramentos}">
+		<form th:action="@{'/loginMedico/paciente/monitoramento/' + ${monitoramento.codigo}}" method="post">
+			<input type="submit" th:value="${monitoramento.codigo}">
+		</form>
+	</th:block>
 </body>
 </html>

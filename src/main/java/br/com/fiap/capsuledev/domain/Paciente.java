@@ -8,6 +8,7 @@ public class Paciente {
 	private Long codigo;
 	private String nome;
 	private Date nascimento;
+	private String nascimentoFormatado;
 	private String rg;
 	private String genero;
 	private String nomeMae;
@@ -16,6 +17,7 @@ public class Paciente {
 	private String telefone;
 	private String orgao;
 	private Date transplante;
+	private String transplanteFormatado;
 	private List<Monitoramento> monitoramentos = new ArrayList<Monitoramento>();
 	
 	public Long getCodigo() {
@@ -36,6 +38,14 @@ public class Paciente {
 	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
 	}
+	
+	public String getNascimentoFormatado() {
+		return nascimentoFormatado;
+	}
+	public void setNascimentoFormatado(String nascimentoFormatado) {
+		this.nascimentoFormatado = nascimentoFormatado;
+	}
+	
 	public String getRg() {
 		return rg;
 	}
@@ -84,12 +94,18 @@ public class Paciente {
 	public void setTransplante(Date transplante) {
 		this.transplante = transplante;
 	}
+	
+	public String getTransplanteFormatado() {
+		return transplanteFormatado;
+	}
+	public void setTransplanteFormatado(String transplanteFormatado) {
+		this.transplanteFormatado = transplanteFormatado;
+	}
 	public List<Monitoramento> getMonitoramentos() {
 		return monitoramentos;
 	}
 	public void setMonitoramentos(List<Monitoramento> monitoramentos) {
 		this.monitoramentos = monitoramentos;
 	}
-	
 	
 }
