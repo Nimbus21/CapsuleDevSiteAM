@@ -52,6 +52,11 @@ public class HomeController {
 		RestTemplate api = new RestTemplate();
 		String url = "https://capsuledevdigital01.herokuapp.com/paciente/" + usuario.getCodigo();
 		Paciente paciente = api.getForObject(url, Paciente.class);
+		
+		for (Monitoramento monitoramento : paciente.getMonitoramentos()) {
+			monitoramento.setInicioFormatado(formatadorData(monitoramento.getInicio()));
+		}
+		
 		model.addAttribute("paciente", paciente);
 
 		return "paciente/index";
