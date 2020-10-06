@@ -2,6 +2,7 @@ package br.com.fiap.capsuledev.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,6 @@ import br.com.fiap.capsuledev.domain.site.Usuario;
 
 @Controller
 public class HomeController {
-	//private List<Long> codigosAutorizados = new ArrayList<Long>();
 
 	@GetMapping
 	public String index(Model model) {
@@ -35,29 +35,32 @@ public class HomeController {
 
 	@PostMapping("/loginPaciente")
 	public String indexPaciente(Usuario usuario, Model model) {
-//		codigosAutorizados.add((long) 1);
-//
-//		if (codigosAutorizados.contains(usuario.getCodigo())) {
-//			RestTemplate api = new RestTemplate();
-//			String url = "https://capsuledevdigital01.herokuapp.com/paciente/" + usuario.getCodigo();
-//			Paciente paciente = api.getForObject(url, Paciente.class);
-//			model.addAttribute("paciente", paciente);
-//
-//			return "paciente/index";
-//		} else {
-//			System.out.println("Código não autorizado");
-//			return "redirect:/";
-//		}
-		
+
 		RestTemplate api = new RestTemplate();
+		
 		String url = "https://capsuledevdigital01.herokuapp.com/paciente/" + usuario.getCodigo();
+		
+		List<Monitoramento> monitoramentosAtivos = new ArrayList<Monitoramento>();
+		List<Monitoramento> monitoramentosNaoAtivos = new ArrayList<Monitoramento>();
+
+		
 		Paciente paciente = api.getForObject(url, Paciente.class);
 		
 		for (Monitoramento monitoramento : paciente.getMonitoramentos()) {
 			monitoramento.setInicioFormatado(formatadorData(monitoramento.getInicio()));
+			
+			if (monitoramento.getAtivo() == true) {
+				monitoramentosAtivos.add(monitoramento);
+			}
+			
+			if (monitoramento.getAtivo() == false) {
+				monitoramentosNaoAtivos.add(monitoramento);
+			}
 		}
 		
 		model.addAttribute("paciente", paciente);
+		model.addAttribute("monitoramentosAtivos", monitoramentosAtivos);
+		model.addAttribute("monitoramentosNaoAtivos", monitoramentosNaoAtivos);
 
 		return "paciente/index";
 
@@ -67,19 +70,18 @@ public class HomeController {
 	public String monitoramentoPaciente(@PathVariable("id") Long codigo, Model model) {
 		
 		montarMonitoramento(codigo, model);
+		
+		
 		return "paciente/monitoramento";
 	}
 	
 	@PostMapping("/loginMedico")
 	public String indexMedico(Usuario usuario, Model model) {
-//		System.out.println(usuario.getEmail());
 		RestTemplate api = new RestTemplate();
 		String url1 = "https://capsuledevdigital01.herokuapp.com/medico/" + usuario.getCodigo();
-//		System.out.println(url1);
 		Medico medico = api.getForObject(url1, Medico.class);
 		
 		String url2 = "https://capsuledevdigital01.herokuapp.com/paciente/pacientesByMedico?codigo=" + medico.getCodigo();
-//		System.out.println(url2);
 		List<?> pacientesMedico = api.getForObject(url2, List.class);
 		
 		model.addAttribute("medico", medico);
@@ -140,7 +142,8 @@ public class HomeController {
 		capsuleControl.setMonitoramento(monitoramento);
 		capsuleControl.setData(new Date(System.currentTimeMillis()));
 
-		CapsuleControl capsuleControlResultado = api.postForObject(url2, capsuleControl, CapsuleControl.class);
+//		CapsuleControl capsuleControlResultado = api.postForObject(url2, capsuleControl, CapsuleControl.class);
+		api.postForObject(url2, capsuleControl, CapsuleControl.class);
 		return "redirect:/";
 	}
 	
@@ -151,6 +154,16 @@ public class HomeController {
 		Hospital hospitalResultado = api.postForObject(url, hospital, Hospital.class);
 		
 		redirectAttributes.addFlashAttribute("msg", String.format("Hospital \"%s\" cadastrado com sucesso!", hospitalResultado.getNome()));
+		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginAdmin/cadastrarPaciente")
+	public String salvarPaciente(Paciente paciente, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/paciente";
+		Paciente pacienteResultado = api.postForObject(url, paciente, Paciente.class);
+		
+		redirectAttributes.addFlashAttribute("msg2", String.format("Paciente \"%s\" cadastrado com sucesso!", pacienteResultado.getNome()));
 		return "redirect:/loginAdmin";
 	}
 	
@@ -209,6 +222,7 @@ public class HomeController {
 		for (CapsuleControl capsuleControl : monitoramento.getListaCapsuleControl()) {
 			capsuleControl.setDataFormatada(formatadorData(capsuleControl.getData()));
 		}
+				
 		model.addAttribute("monitoramento", monitoramento);
 	}
 	

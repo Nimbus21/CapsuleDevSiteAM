@@ -79,5 +79,37 @@
 	<th:block th:each="paciente: ${pacientes}">
 		<p th:text="${paciente.nome}"></p>
 	</th:block>
+	<h2>Cadastrar novo paciente</h2>
+	<div th:if="${msg2 != null}" th:text="${msg2}"></div>
+	<form action="/loginAdmin/cadastrarPaciente" method="post">
+		<label for="nome">Nome:</label>
+		<input type="text" name="nome" id="nome"><br>
+		<label for="rg">RG:</label>
+		<input type="text" name="rg" id="rg"><br>
+		<label for="endereco">Endereço:</label>
+		<input type="text" name="endereco" id="endereco"><br>
+		<label for="contato">Nome do contato:</label>
+		<input type="text" name = "contato" id="contato"><br>
+		<label for="orgao">Órgão:</label>
+		<input type="text" name = "orgao" id="orgao"><br>
+		<label for="nomeMae">Nome da mãe:</label>
+		<input type="text" name="nomeMae" id="nomeMae"><br>
+		<label for="telefone">Telefone:</label>
+		<input type="text" name="telefone" id="telefone"><br>
+		<label for="nascimento">Data de nascimento</label>
+		<input type="date" name = "nascimento" id="nascimento"/><br>
+		<label for="transplante">Data do transplante</label>
+		<input type="date" name = "transplante" id="transplante"/><br>
+		
+		<div>
+			Gênero
+			<select name="genero">
+				<option value="Masculino">Masculino</option>
+				<option value="Feminino">Feminino</option>
+				<option value="Outros">Outros</option>
+			</select>
+		</div>
+		<button type="submit">Adicionar</button>
+	</form>
 </body>
 </html>

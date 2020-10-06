@@ -35,14 +35,25 @@
 <h1>Página do paciente logado</h1>
 
 <p>Bem vindo, <span th:text="${paciente.nome}"></span>!</p>
-<h2>Lista dos seus monitoramentos</h2>
+<h2>Lista de todos seus monitoramentos</h2>
 
 		<th:block th:each="monitoramento: ${paciente.monitoramentos}">
 			<form th:action="@{'/loginPaciente/monitoramento/' + ${monitoramento.codigo}}" method=post>
 				<input type="submit" th:value="@{'Código: ' + ${monitoramento.codigo} + '. Data de início: ' + ${monitoramento.inicioFormatado}}" class="list-group-item list-group-item-action">
 			</form>
 		</th:block>	
-
+<h2>Lista dos seus monitoramentos concluídos</h2>
+	<th:block th:each="monitoramento: ${monitoramentosNaoAtivos}">
+		<form th:action="@{'/loginPaciente/monitoramento/' + ${monitoramento.codigo}}" method="post">
+			<input type="submit" th:value="@{'Código: ' + ${monitoramento.codigo} + '. Data de início: ' + ${monitoramento.inicioFormatado}}" class="list-group-item list-group-item-action">
+		</form>
+	</th:block>
+<h2>Lista dos seus monitoramentos ativos</h2>
+	<th:block th:each="monitoramento: ${monitoramentosAtivos}">
+		<form th:action="@{'/loginPaciente/monitoramento/' + ${monitoramento.codigo}}" method="post">
+			<input type="submit" th:value="@{'Código: ' + ${monitoramento.codigo} + '. Data de início: ' + ${monitoramento.inicioFormatado}}" class="list-group-item list-group-item-action">
+		</form>
+	</th:block>
 	</main>
 	
 	</div>

@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Paciente {
 	private Long codigo;
 	private String nome;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date nascimento;
 	private String nascimentoFormatado;
 	private String rg;
@@ -16,6 +19,7 @@ public class Paciente {
 	private String contato;
 	private String telefone;
 	private String orgao;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date transplante;
 	private String transplanteFormatado;
 	private List<Monitoramento> monitoramentos = new ArrayList<Monitoramento>();
