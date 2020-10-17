@@ -77,7 +77,7 @@
 	</th:block>
 	<h1>Lista de pacientes cadastrados</h1>
 	<th:block th:each="paciente: ${pacientes}">
-		<p th:text="${paciente.nome}"> - código: <span th:text="${paciente.codigo}"></span></p>
+		<p>Nome: <span th:text="${paciente.nome}"></span> Código: <span th:text="${paciente.codigo}"></span></p>
 	</th:block>
 	<h2>Cadastrar novo paciente</h2>
 	<div th:if="${msg2 != null}" th:text="${msg2}"></div>
