@@ -28,7 +28,15 @@
 			<p>Código: <span th:text="${capsuleControl.codigo}"></span></p>
 			<p>Data: <span th:text="${capsuleControl.dataFormatada}"></span></p>
 			<p>Dosagem: <span th:text="${capsuleControl.dose}"></span></p>
-			<p>Medicamento: <span th:text="${capsuleControl.remedio}"></span></p>		
+			<p>Medicamento: <span th:text="${capsuleControl.remedio}"></span></p>
+			<form action="/loginMedico/editarCapsuleControl" method="post">
+				<input type="hidden" name="codigo" th:value="${capsuleControl.codigo}">
+				<input type="submit" value="Editar">
+			</form>	
+			<form action="/loginMedico/excluirCapsuleControl" method="post">
+				<input type="hidden" name="codigo" th:value="${capsuleControl.codigo}">
+				<input type="submit" value="Deletar">
+			</form>	
 		</th:block>
 	
 	<form action="/loginMedico/monitoramento/cadastrarCapsuleControl" method="post">

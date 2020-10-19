@@ -77,15 +77,8 @@ public class HomeController {
 	
 	@PostMapping("/loginMedico")
 	public String indexMedico(Usuario usuario, Model model) {
-		RestTemplate api = new RestTemplate();
-		String url1 = "https://capsuledevdigital01.herokuapp.com/medico/" + usuario.getCodigo();
-		Medico medico = api.getForObject(url1, Medico.class);
 		
-		String url2 = "https://capsuledevdigital01.herokuapp.com/paciente/pacientesByMedico?codigo=" + medico.getCodigo();
-		List<?> pacientesMedico = api.getForObject(url2, List.class);
-		
-		model.addAttribute("medico", medico);
-		model.addAttribute("pacientesMedico", pacientesMedico);
+		montarIndexMedico(usuario, model);
 		return "medico/index";
 	}
 
@@ -102,6 +95,14 @@ public class HomeController {
 		
 		montarIndexAdmin(model);
 		return "admin/index";
+	}
+	
+	//esperando spring security
+	@GetMapping("/loginMedico")
+	public String indexMedicoGet(Usuario usuario, Model model) {
+		
+		montarIndexMedico(usuario, model);
+		return "medico/index";
 	}
 	
 	@PostMapping("/loginMedico/paciente/{id}")
@@ -182,6 +183,21 @@ public class HomeController {
 		return "redirect:/loginAdmin";
 	}
 	
+	@PostMapping("/loginMedico/excluirCapsuleControl")
+	public String deletarCapsuleControl(long codigo, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("id", String.valueOf(codigo));
+		
+		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/{id}";
+		
+		api.delete(url, params);
+		
+		redirectAttributes.addFlashAttribute("msg", "CapsuleControl excluído com sucesso!");
+		return "redirect:/";
+	}
+	
 	@PostMapping("/loginAdmin/editarHospital")
 	public String editarHospital(long codigo, RedirectAttributes redirectAttributes) {
 		
@@ -192,6 +208,28 @@ public class HomeController {
 		
 		redirectAttributes.addFlashAttribute("hospitalEditavel", hospitalEditavel);
 		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginMedico/editarCapsuleControl")
+	public String editarCapsuleControl(long codigo, Model model) {
+		/*
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
+		
+		CapsuleControl capsuleControlEditavel = api.getForObject(url, CapsuleControl.class);
+		
+		redirectAttributes.addFlashAttribute("capsuleControlEditavel", capsuleControlEditavel);
+		return "redirect:/loginMedico";
+		*/
+		
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
+		
+		CapsuleControl capsuleControl = api.getForObject(url, CapsuleControl.class);
+		
+		model.addAttribute("capsuleControl", capsuleControl);
+		
+		return "medico/editarCapsuleControl";
 	}
 	
 	public String formatadorData(Date date) {
@@ -225,6 +263,18 @@ public class HomeController {
 				
 		model.addAttribute("monitoramento", monitoramento);
 	}
+	
+	public void montarIndexMedico(Usuario usuario, Model model) {
+		RestTemplate api = new RestTemplate();
+		String url1 = "https://capsuledevdigital01.herokuapp.com/medico/" + usuario.getCodigo();
+		Medico medico = api.getForObject(url1, Medico.class);
+		
+		String url2 = "https://capsuledevdigital01.herokuapp.com/paciente/pacientesByMedico?codigo=" + medico.getCodigo();
+		List<?> pacientesMedico = api.getForObject(url2, List.class);
+		
+		model.addAttribute("medico", medico);
+		model.addAttribute("pacientesMedico", pacientesMedico);
+	};
 	
 	public void montarIndexAdmin(Model model) {
 		RestTemplate api = new RestTemplate();

@@ -28,13 +28,13 @@
 							<td>
 								<form th:action="@{/loginAdmin/editarHospital}" method="post">
 									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
-									<input type="submit" value="Edit">
+									<input type="submit" value="Editar">
 								</form>
 							</td>
 							<td>
 								<form th:action="@{/loginAdmin/excluirHospital}" method="post">
 									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
-									<input type="submit" value="Destroy">
+									<input type="submit" value="Deletar">
 								</form>
 							</td>
 						</tr>
