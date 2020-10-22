@@ -97,6 +97,11 @@ public class HomeController {
 		return "admin/index";
 	}
 	
+	@GetMapping("/loginAdministrador")
+	public String loginAdministrador(Model model) {
+		return "admin/login";
+	}
+	
 	//esperando spring security
 	@GetMapping("/loginMedico")
 	public String indexMedicoGet(Usuario usuario, Model model) {
@@ -128,6 +133,17 @@ public class HomeController {
 	//@PostMapping("/loginMedico/paciente/monitoramento/{id}/cadastrarCapsuleControl")
 	@PostMapping("/loginMedico/monitoramento/cadastrarCapsuleControl")
 	public String paginaCadastroCapsuleControl(Long codigo, Model model) {
+		
+		/*
+		RestTemplate api = new RestTemplate();
+		
+		String url = "https://capsuledevdigital01.herokuapp.com/monitoramento";
+		
+		List<?> listaMonitoramentos = api.getForObject(url, List.class);
+		
+		model.addAttribute("listaMonitoramentos", listaMonitoramentos);
+		
+		*/
 		model.addAttribute("codigo", codigo);
 		return "medico/cadastrarCapsuleControl";
 	}
@@ -165,6 +181,16 @@ public class HomeController {
 		Paciente pacienteResultado = api.postForObject(url, paciente, Paciente.class);
 		
 		redirectAttributes.addFlashAttribute("msg2", String.format("Paciente \"%s\" cadastrado com sucesso!", pacienteResultado.getNome()));
+		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginAdmin/cadastrarMonitoramento")
+	public String salvarMonitoramento(Monitoramento monitoramento, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/paciente";
+		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
+		
+		redirectAttributes.addFlashAttribute("msg3", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
 		return "redirect:/loginAdmin";
 	}
 	
@@ -260,7 +286,16 @@ public class HomeController {
 		for (CapsuleControl capsuleControl : monitoramento.getListaCapsuleControl()) {
 			capsuleControl.setDataFormatada(formatadorData(capsuleControl.getData()));
 		}
-				
+		
+		String status = new String();
+		
+		if (monitoramento.getAtivo() == true) {
+			status = "Ativo";
+		} else {
+			status = "Concluído";
+		}
+		
+		model.addAttribute("status", status);		
 		model.addAttribute("monitoramento", monitoramento);
 	}
 	

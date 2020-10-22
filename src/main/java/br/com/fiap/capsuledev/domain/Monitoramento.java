@@ -15,10 +15,12 @@ public class Monitoramento {
 	private Boolean ativo;
 	private Long frequenciaSegundos;
 	private Hospital hospital;
+	private Long codigoHospital;
 	private List<CapsuleWatch> listaCapsuleWatch = new ArrayList<CapsuleWatch>();
 	private Medico medico;
 	private List<CapsuleControl> listaCapsuleControl = new ArrayList<CapsuleControl>();
 	private Paciente paciente;
+	private Long codigoPaciente;
 	
 	public Long getCodigo() {
 		return codigo;
@@ -77,6 +79,13 @@ public class Monitoramento {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
+	
+	public Long getCodigoPaciente() {
+		return codigoPaciente;
+	}
+	public void setCodigoPaciente(Long codigoPaciente) {
+		this.codigoPaciente = codigoPaciente;
+	}
 	public Hospital getHospital() {
 		return hospital;
 	}
@@ -84,6 +93,12 @@ public class Monitoramento {
 		this.hospital = hospital;
 	}
 
+	public Long getCodigoHospital() {
+		return codigoHospital;
+	}
+	public void setCodigoHospital(Long codigoHospital) {
+		this.codigoHospital = codigoHospital;
+	}
 	public List<CapsuleWatch> getListaCapsuleWatch() {
 		return listaCapsuleWatch;
 	}

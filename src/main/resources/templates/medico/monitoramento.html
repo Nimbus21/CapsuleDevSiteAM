@@ -3,8 +3,37 @@
 <head>
 <meta charset="utf-8">
 <title>Insert title here</title>
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
+
+<header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand">CapsuleDev site</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark">Home2</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+<main role="main" class="pb-3">
+
 	<h1>Dados do monitoramento</h1>
 		<p>Código: <span th:text="${monitoramento.codigo}"></span></p>
 		<p>Paciente: <span th:text="${monitoramento.paciente.nome}"></span></p>
@@ -12,7 +41,7 @@
 		<p>Início do monitoramento: <span th:text="${monitoramento.inicioFormatado}"></span></p>
 		<p>Fim do monitoramento: <span th:text="${monitoramento.fimFormatado}"></span></p>
 		<p>Frequência do monitoramento: <span th:text="${monitoramento.frequenciaSegundos}"></span> segundos</p>
-		<p>Ativo? <span th:text="${monitoramento.ativo}"></span></p>
+		<p>Status: <span th:text="${status}"></span></p>
 	<h2>Relatórios do CapsuleWatch</h2>
 		<th:block th:each="capsuleWatch: ${monitoramento.listaCapsuleWatch}">
 			<p>Código: <span th:text="${capsuleWatch.codigo}"></span></p>
@@ -43,5 +72,15 @@
 		<input type="hidden" name="codigo" th:value="${monitoramento.codigo}">
 		<input type="submit" value="Cadastrar CapsuleControl">
 	</form>
+	
+	</main>
+	
+	</div>
+	<footer class="border-top footer text-muted">
+        <div class="container">
+           <p>Capsule Dev &copy; 2020</p>
+        </div>
+    </footer>
+	
 </body>
 </html>
