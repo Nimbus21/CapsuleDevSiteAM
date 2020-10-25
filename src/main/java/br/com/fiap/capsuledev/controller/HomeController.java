@@ -187,12 +187,44 @@ public class HomeController {
 	@PostMapping("/loginAdmin/cadastrarMonitoramento")
 	public String salvarMonitoramento(Monitoramento monitoramento, RedirectAttributes redirectAttributes) {
 		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/monitoramento";
+		String url2 = "https://capsuledevdigital01.herokuapp.com/hospital/" + monitoramento.getCodigoHospital();
+		String url3 = "https://capsuledevdigital01.herokuapp.com/medico/" + monitoramento.getCodigoMedico();
+		String url4 = "https://capsuledevdigital01.herokuapp.com/paciente/" + monitoramento.getCodigoPaciente();
+		
+		System.out.println("url 2: " + url2);
+		System.out.println("fim> " + monitoramento.getFim());
+		
+		Hospital hospital = api.getForObject(url2, Hospital.class);
+		Medico medico = api.getForObject(url3, Medico.class);
+		Paciente paciente = api.getForObject(url4, Paciente.class);
+		
+		Date agora = new Date(System.currentTimeMillis());
+		
+		monitoramento.setInicio(agora);
+		monitoramento.setAtivo(true);
+		monitoramento.setHospital(hospital);
+		monitoramento.setMedico(medico);
+		monitoramento.setPaciente(paciente);
+		
+		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
+		
+		redirectAttributes.addFlashAttribute("msg3", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
+		return "redirect:/loginAdmin";
+	}
+	
+	/*
+	
+	@PostMapping("loginAdmin/cadastrarMonitoramentoAgora")
+	public String salvarMonitoramentoAgora(Monitoramento monitoramento, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
 		String url = "https://capsuledevdigital01.herokuapp.com/paciente";
 		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
 		
 		redirectAttributes.addFlashAttribute("msg3", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
 		return "redirect:/loginAdmin";
 	}
+	*/
 	
 	@PostMapping("/loginAdmin/excluirHospital")
 	public String deletarHospital(long codigo, RedirectAttributes redirectAttributes) {
@@ -315,11 +347,14 @@ public class HomeController {
 		RestTemplate api = new RestTemplate();
 		String url1 = "https://capsuledevdigital01.herokuapp.com/hospital";
 		String url2 = "https://capsuledevdigital01.herokuapp.com/paciente";
+		String url3 = "https://capsuledevdigital01.herokuapp.com/medico";
 		
 		List<?> hospitais = api.getForObject(url1, List.class);
 		List<?> pacientes = api.getForObject(url2, List.class);
+		List<?> medicos = api.getForObject(url3, List.class);
 		
 		model.addAttribute("hospitais", hospitais);
 		model.addAttribute("pacientes", pacientes);
+		model.addAttribute("medicos", medicos);
 	}
 }

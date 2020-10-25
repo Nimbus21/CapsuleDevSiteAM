@@ -3,34 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"
-	rel="stylesheet" />
-<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"
-	rel="stylesheet" />
+<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
 <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
-
-	<header>
-		<nav
-			class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<a class="navbar-brand">CapsuleDev site</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target=".navbar-collapse"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div
-					class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item"><a href="/" class="nav-link text-dark">Home</a>
-						</li>
-						<li class="nav-item"><a class="nav-link text-dark">Home2</a>
-						</li>
-					</ul>
-				</div>
+<header>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+<div class="container">
+<a class="navbar-brand">CapsuleDev site</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+<ul class="navbar-nav flex-grow-1">
+<li class="nav-item">
+<a href="/" class="nav-link text-dark">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link text-dark">Home2</a>
+</li>
+</ul>
+</div>
 			</div>
 		</nav>
 	</header>
@@ -127,16 +121,13 @@
 				<input type="text" name="nome" id="nome"><br> 
 				<label for="rg">RG:</label> 
 				<input type="text" name="rg" id="rg"><br>
-				<label
-					for="endereco">Endereço:</label> <input type="text" name="endereco"
+				<label for="endereco">Endereço:</label> <input type="text" name="endereco"
 					id="endereco"><br> <label for="contato">Nome
 					do contato:</label> <input type="text" name="contato" id="contato"><br>
-				<label for="orgao">Órgão:</label> <input type="text" name="orgao"
-					id="orgao"><br> <label for="nomeMae">Nome da
+				<label for="orgao">Órgão:</label> <input type="text" name="orgao" id="orgao"><br> <label for="nomeMae">Nome da
 					mãe:</label> <input type="text" name="nomeMae" id="nomeMae"><br>
-				<label for="telefone">Telefone:</label> <input type="text"
-					name="telefone" id="telefone"><br> <label
-					for="nascimento">Data de nascimento</label> <input type="date"
+				<label for="telefone">Telefone:</label> <input type="text" name="telefone" id="telefone"><br> 
+				<label for="nascimento">Data de nascimento</label> <input type="date"
 					name="nascimento" id="nascimento" /><br> <label
 					for="transplante">Data do transplante</label> <input type="date"
 					name="transplante" id="transplante" /><br>
@@ -157,14 +148,14 @@
 <form action="loginAdmin/cadastrarMonitoramento" method="post">
 	
 
-	<label for="#">Data de conclusão</label>
-	<input type="date" name="#" id="#"/><br>
+	<label for="conclusao">Data de conclusão</label>
+	<input type="date" name="fim" id="conclusao"/><br>
 	
 	<label for="freqseg">Qual será a frequência (em segundos) que o monitoramento ocorrerá?</label>
-	<input type="number" name="#" id="freqseg" /><br>
+	<input type="number" name="frequenciaSegundos" id="freqseg" /><br>
 	
 	<label>Descrição do monitoramento</label>
-	<input type="text"/><br>
+	<input type="text" name="descricao"/><br>
 	
 	<div>
 		<label>Hospital:</label>
@@ -179,6 +170,14 @@
 		<select name="codigoPaciente">
 			<th:block th:each="paciente: ${pacientes}">
 				<option th:value="${paciente.codigo}" th:text="${paciente.nome}"></option>
+			</th:block>
+		</select>
+	</div>
+	<div>
+		<label>Médico:</label>
+		<select name="codigoMedico">
+			<th:block th:each="medico: ${medicos}">
+				<option th:value="${medico.codigo}" th:text="${medico.nome}"></option>
 			</th:block>
 		</select>
 	</div><br>

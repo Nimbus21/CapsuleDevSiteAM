@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Monitoramento {
 
 	private Long codigo;
 	private String descricao;
 	private Date inicio;
 	private String inicioFormatado;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fim;
 	private String fimFormatado;
 	private Boolean ativo;
@@ -18,6 +21,7 @@ public class Monitoramento {
 	private Long codigoHospital;
 	private List<CapsuleWatch> listaCapsuleWatch = new ArrayList<CapsuleWatch>();
 	private Medico medico;
+	private Long codigoMedico;
 	private List<CapsuleControl> listaCapsuleControl = new ArrayList<CapsuleControl>();
 	private Paciente paciente;
 	private Long codigoPaciente;
@@ -110,6 +114,12 @@ public class Monitoramento {
 	}
 	public void setMedico(Medico medico) {
 		this.medico = medico;
+	}
+	public Long getCodigoMedico() {
+		return codigoMedico;
+	}
+	public void setCodigoMedico(Long codigoMedico) {
+		this.codigoMedico = codigoMedico;
 	}
 	public List<CapsuleControl> getListaCapsuleControl() {
 		return listaCapsuleControl;
