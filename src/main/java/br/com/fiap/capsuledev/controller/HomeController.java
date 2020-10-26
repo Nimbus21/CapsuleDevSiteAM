@@ -3,12 +3,14 @@ package br.com.fiap.capsuledev.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -174,6 +176,16 @@ public class HomeController {
 		return "redirect:/loginAdmin";
 	}
 	
+	@PostMapping("/loginAdmin/cadastrarMedico")
+	public String salvarMedico(Medico medico, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/medico";
+		Medico medicoResultado = api.postForObject(url, medico, Medico.class);
+		
+		redirectAttributes.addFlashAttribute("msg3", String.format("Médico \"%s\" cadastrado com sucesso!", medicoResultado.getNome()));
+		return "redirect:/loginAdmin";
+	}
+	
 	@PostMapping("/loginAdmin/cadastrarPaciente")
 	public String salvarPaciente(Paciente paciente, RedirectAttributes redirectAttributes) {
 		RestTemplate api = new RestTemplate();
@@ -209,7 +221,7 @@ public class HomeController {
 		
 		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
 		
-		redirectAttributes.addFlashAttribute("msg3", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
+		redirectAttributes.addFlashAttribute("msg4", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
 		return "redirect:/loginAdmin";
 	}
 	
@@ -238,6 +250,20 @@ public class HomeController {
 		api.delete(url, params);
 		
 		redirectAttributes.addFlashAttribute("msg", "Hospital excluído com sucesso!");
+		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginAdmin/excluirPaciente")
+	public String deletarPaciente(long codigo, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("id", String.valueOf(codigo));
+		
+		String url = "https://capsuledevdigital01.herokuapp.com/paciente/{id}";
+		
+		api.delete(url, params);
+		
 		return "redirect:/loginAdmin";
 	}
 	
@@ -350,9 +376,17 @@ public class HomeController {
 		String url3 = "https://capsuledevdigital01.herokuapp.com/medico";
 		
 		List<?> hospitais = api.getForObject(url1, List.class);
-		List<?> pacientes = api.getForObject(url2, List.class);
+		
+		Paciente[] pacientesArray = api.getForObject(url2, Paciente[].class);
+		List<Paciente> pacientes = Arrays.asList(pacientesArray);
+		
 		List<?> medicos = api.getForObject(url3, List.class);
 		
+		for (Paciente paciente : pacientes) {
+			paciente.setNascimentoFormatado(formatadorData(paciente.getNascimento()));
+			paciente.setTransplanteFormatado(formatadorData(paciente.getTransplante()));
+		}
+						
 		model.addAttribute("hospitais", hospitais);
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute("medicos", medicos);

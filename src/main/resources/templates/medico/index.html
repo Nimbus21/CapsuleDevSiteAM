@@ -35,7 +35,7 @@
 <main role="main" class="pb-3">
 
 <h1>Página do médico logado</h1>
-<p>Bem vindo, dr. <span th:text="${medico.nome}"></span>!</p>
+<p>Bem vindo(a), dr(a). <span th:text="${medico.nome}"></span>!</p>
 <h2>Lista dos seus pacientes</h2>
 	<th:block th:each="paciente: ${pacientesMedico}">
 		<form th:action="@{'/loginMedico/paciente/' + ${paciente.codigo}}" method="post">
