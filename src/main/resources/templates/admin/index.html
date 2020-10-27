@@ -99,15 +99,10 @@
 				</form>
 			</th:block>
 			<h1>Lista de pacientes cadastrados</h1>
-			<!--  
-			<th:block th:each="paciente: ${pacientes}">
-				<p>Nome: <span th:text="${paciente.nome}"></span> Código: <span th:text="${paciente.codigo}"></span></p>
-			</th:block>
-			-->
-			  
 			<table>
 				<thead>
 					<tr>
+						<th>Código</th>
 						<th>Nome</th>
 						<th>RG</th>
 						<th>Endereço</th>
@@ -125,6 +120,7 @@
 				<tbody>
 					<th:block th:each="paciente: ${pacientes}">
 						<tr>
+						<td th:text="${paciente.codigo}"></td>
 						<td th:text="${paciente.nome}"></td>
 						<td th:text="${paciente.rg}"></td>
 						<td th:text="${paciente.endereco}"></td>
@@ -179,6 +175,33 @@
 				</div>
 				<button type="submit">Adicionar</button>
 			</form>
+			<h1>Lista de médicos cadastrados</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>CRM</th>
+						<th colspan="2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="medico: ${medicos}">
+						<tr>
+						<td th:text="${medico.codigo}"></td>
+						<td th:text="${medico.nome}"></td>
+						<td th:text="${medico.crm}"></td>
+						<td>
+							Editar
+						</td>
+						<td>
+							Deletar
+						</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			
 			<h2>Cadastrar novo médico</h2>
 			<div th:if="${msg3 != null}" th:text="${msg3}"></div>
 			<form action="/loginAdmin/cadastrarMedico" method="post">
@@ -188,6 +211,44 @@
 				<input type="text" name="crm" id="crm"><br> 
 				<button type="submit">Adicionar</button>
 			</form>
+			<h1>Lista de monitoramentos</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>StatusAtivo</th>
+						<th>Descrição</th>
+						<th>Data fim</th>
+						<th>Frequência segundos</th>
+						<th>Data início</th>
+						<th>Hospital</th>
+						<th>Médico</th>
+						<th>Paciente</th>
+						<th colspan="2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="monitoramento: ${monitoramentos}">
+						<tr>
+						<td th:text="${monitoramento.codigo}"></td>
+						<td th:text="${monitoramento.ativo}"></td>
+						<td th:text="${monitoramento.descricao}"></td>
+						<td th:text="${monitoramento.fimFormatado}"></td>
+						<td th:text="${monitoramento.frequenciaSegundos}"></td>
+						<td th:text="${monitoramento.inicioFormatado}"></td>
+						<td th:text="${monitoramento.hospital.nome}"></td>
+						<td th:text="${monitoramento.medico.nome}"></td>
+						<td th:text="${monitoramento.paciente.nome}"></td>
+						<td>
+							Editar
+						</td>
+						<td>
+							Deletar
+						</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
 			<h2>Cadastrar novo monitoramento</h2>
 			<div th:if="${msg4 != null}" th:text="${msg4}"></div>
 			<form action="loginAdmin/cadastrarMonitoramento" method="post">

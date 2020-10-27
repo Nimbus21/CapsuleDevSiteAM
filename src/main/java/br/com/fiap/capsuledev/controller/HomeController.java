@@ -374,6 +374,7 @@ public class HomeController {
 		String url1 = "https://capsuledevdigital01.herokuapp.com/hospital";
 		String url2 = "https://capsuledevdigital01.herokuapp.com/paciente";
 		String url3 = "https://capsuledevdigital01.herokuapp.com/medico";
+		String url4 = "https://capsuledevdigital01.herokuapp.com/monitoramento";
 		
 		List<?> hospitais = api.getForObject(url1, List.class);
 		
@@ -382,13 +383,22 @@ public class HomeController {
 		
 		List<?> medicos = api.getForObject(url3, List.class);
 		
+		Monitoramento[] monitoramentosArray = api.getForObject(url4, Monitoramento[].class);
+		List<Monitoramento> monitoramentos = Arrays.asList(monitoramentosArray);
+		
 		for (Paciente paciente : pacientes) {
 			paciente.setNascimentoFormatado(formatadorData(paciente.getNascimento()));
 			paciente.setTransplanteFormatado(formatadorData(paciente.getTransplante()));
+		}
+		
+		for (Monitoramento monitoramento : monitoramentos) {
+			monitoramento.setInicioFormatado(formatadorData(monitoramento.getInicio()));
+			monitoramento.setFimFormatado(formatadorData(monitoramento.getFim()));
 		}
 						
 		model.addAttribute("hospitais", hospitais);
 		model.addAttribute("pacientes", pacientes);
 		model.addAttribute("medicos", medicos);
+		model.addAttribute("monitoramentos", monitoramentos);
 	}
 }
