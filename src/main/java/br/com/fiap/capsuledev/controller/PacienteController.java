@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import br.com.fiap.capsuledev.domain.Monitoramento;
 import br.com.fiap.capsuledev.domain.Paciente;
 import br.com.fiap.capsuledev.domain.site.Usuario;
 
+@Controller
 public class PacienteController {
 	
 	public String formatadorData(Date date) {

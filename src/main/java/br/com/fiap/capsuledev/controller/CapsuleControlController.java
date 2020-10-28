@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.fiap.capsuledev.domain.CapsuleControl;
 import br.com.fiap.capsuledev.domain.Monitoramento;
 
+@Controller
 public class CapsuleControlController {
 	
 	//@PostMapping("/loginMedico/paciente/monitoramento/{id}/cadastrarCapsuleControl")
