@@ -5,14 +5,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Cadastro de nova capsuleControl</h1>
+<h1>Editar capsuleControl</h1>
 	<form action="/loginMedico/monitoramento/cadastrarCapsuleControl/confirm" method="post">
-		<input type="hidden" name="codigoMonitoramento" th:value="${codigo}">
+		<input type="hidden" name="codigo" th:value="${capsuleControl.codigo}">
 		<label for="remedio">Medicamento:</label>
-		<input type="text" name="remedio" id="remedio"><br>
+		<input type="text" name="remedio" id="remedio" th:value="${capsuleControl.remedio}"><br>
 		<label for="dose">Dosagem:</label>
-		<input type="text" name="dose" id="dose"><br>
-		
+		<input type="text" name="dose" id="dose" th:value="${capsuleControl.dose}"><br>
 		<input type="submit" value="Enviar">
 	</form>
 </body>

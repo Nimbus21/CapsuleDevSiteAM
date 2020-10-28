@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,6 +62,28 @@ public class HomeController {
 		return "redirect:/loginAdmin";
 	}
 	*/
+	
+	@PostMapping("/loginMedico/editarCapsuleControl")
+	public String editarCapsuleControl(long codigo, Model model) {
+		/*
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
+		
+		CapsuleControl capsuleControlEditavel = api.getForObject(url, CapsuleControl.class);
+		
+		redirectAttributes.addFlashAttribute("capsuleControlEditavel", capsuleControlEditavel);
+		return "redirect:/loginMedico";
+		*/
+		
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
+		
+		CapsuleControl capsuleControl = api.getForObject(url, CapsuleControl.class);
+		
+		model.addAttribute("capsuleControl", capsuleControl);
+		
+		return "medico/editarCapsuleControl";
+	}
 	
 	public String formatadorData(Date date) {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

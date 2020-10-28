@@ -1,12 +1,37 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
+	<link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet" />
+	<link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
-<h1>Lista de hospitais cadastrados</h1>
-<table>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+			<div class="container">
+				<a class="navbar-brand">CapsuleDev site</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a href="/" class="nav-link text-dark">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark">Home2</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div class="container">
+		<main role="main" class="pb-3">
+			<h1>Lista de hospitais cadastrados</h1>
+			<table>
 				<thead>
 					<tr>
 						<th>Nome</th>
@@ -20,96 +45,251 @@
 				<tbody>
 					<th:block th:each="hospital: ${hospitais}">
 						<tr>
-							<td th:text="${hospital.nome}"></td>
-							<td th:text="${hospital.cnpj}"></td>
-							<td th:text="${hospital.endereco}"></td>
-							<td th:text="${hospital.inscricaoEstadual}"></td>
-							<td th:text="${hospital.telefone}"></td>
-							<td>
-								<form th:action="@{/loginAdmin/editarHospital}" method="post">
-									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
-									<input type="submit" value="Edit">
-								</form>
-							</td>
-							<td>
-								<form th:action="@{/loginAdmin/excluirHospital}" method="post">
-									<input type="hidden" name="codigo" th:value="${hospital.codigo}">
-									<input type="submit" value="Destroy">
-								</form>
-							</td>
+						<td th:text="${hospital.nome}"></td>
+						<td th:text="${hospital.cnpj}"></td>
+						<td th:text="${hospital.endereco}"></td>
+						<td th:text="${hospital.inscricaoEstadual}"></td>
+						<td th:text="${hospital.telefone}"></td>
+						<td>
+							<form th:action="@{/loginAdmin/editarHospital}" method="post">
+							<input type="hidden" name="codigo" th:value="${hospital.codigo}"> 
+							<input type="submit" value="Editar">
+							</form>
+						</td>
+						<td>
+							<form th:action="@{/loginAdmin/excluirHospital}" method="post">
+								<input type="hidden" name="codigo" th:value="${hospital.codigo}"> 
+								<input type="submit" value="Deletar">
+							</form>
+						</td>
 						</tr>
 					</th:block>
 				</tbody>
-</table>
-<h2>Cadastrar novo hospital</h2>
-	<div th:if="${msg != null}" th:text="${msg}"></div>
-<!-- 	<th:block th:if="${hospitalEditavel == null}"> -->
-	<form action="/loginAdmin/cadastrarHospital" method="post">
-		<label for="nome">Nome:</label>
-		<input type="text" name="nome" id="nome"><br>
-		<label for="cnpj">CNPJ:</label>
-		<input type="text" name="cnpj" id="cnpj"><br>
-		<label for="endereco">Endereço:</label>
-		<input type="text" name="endereco" id="endereco"><br>
-		<label for="inscricaoEstadual">Inscrição estadual:</label>
-		<input type="text" name = "inscricaoEstadual" id="inscricaoEstadual"><br>
-		<label for="telefone">Telefone:</label>
-		<input type="text" name = "telefone" id="telefone"><br>
-		<button type="submit">Adicionar</button>
-	</form>
-<!-- 	</th:block> -->
-	<th:block th:if="${hospitalEditavel != null}">
-	<h2>Editar hospital <span th:text="${hospitalEditavel.nome}"></span></h2>
-	<form action="/loginAdmin/cadastrarHospital" method="post">
-		<input type="hidden" name="codigo" th:value="${hospitalEditavel.codigo}">
-		<label for="nome">Nome:</label>
-		<input type="text" name="nome" id="nome" th:value="${hospitalEditavel.nome}"><br>
-		<label for="cnpj">CNPJ:</label>
-		<input type="text" name="cnpj" id="cnpj" th:value="${hospitalEditavel.cnpj}"><br>
-		<label for="endereco">Endereço:</label>
-		<input type="text" name="endereco" id="endereco" th:value="${hospitalEditavel.endereco}"><br>
-		<label for="inscricaoEstadual">Inscrição estadual:</label>
-		<input type="text" name = "inscricaoEstadual" id="inscricaoEstadual" th:value="${hospitalEditavel.inscricaoEstadual}"><br>
-		<label for="telefone">Telefone:</label>
-		<input type="text" name = "telefone" id="telefone" th:value="${hospitalEditavel.telefone}"><br>
-		<button type="submit">Editar</button>
-	</form>
-	</th:block>
-	<h1>Lista de pacientes cadastrados</h1>
-	<th:block th:each="paciente: ${pacientes}">
-		<p th:text="${paciente.nome}"></p>
-	</th:block>
-	<h2>Cadastrar novo paciente</h2>
-	<div th:if="${msg2 != null}" th:text="${msg2}"></div>
-	<form action="/loginAdmin/cadastrarPaciente" method="post">
-		<label for="nome">Nome:</label>
-		<input type="text" name="nome" id="nome"><br>
-		<label for="rg">RG:</label>
-		<input type="text" name="rg" id="rg"><br>
-		<label for="endereco">Endereço:</label>
-		<input type="text" name="endereco" id="endereco"><br>
-		<label for="contato">Nome do contato:</label>
-		<input type="text" name = "contato" id="contato"><br>
-		<label for="orgao">Órgão:</label>
-		<input type="text" name = "orgao" id="orgao"><br>
-		<label for="nomeMae">Nome da mãe:</label>
-		<input type="text" name="nomeMae" id="nomeMae"><br>
-		<label for="telefone">Telefone:</label>
-		<input type="text" name="telefone" id="telefone"><br>
-		<label for="nascimento">Data de nascimento</label>
-		<input type="date" name = "nascimento" id="nascimento"/><br>
-		<label for="transplante">Data do transplante</label>
-		<input type="date" name = "transplante" id="transplante"/><br>
-		
-		<div>
-			Gênero
-			<select name="genero">
-				<option value="Masculino">Masculino</option>
-				<option value="Feminino">Feminino</option>
-				<option value="Outros">Outros</option>
-			</select>
+			</table>
+			<h2>Cadastrar novo hospital</h2>
+			<div th:if="${msg != null}" th:text="${msg}"></div>
+			<form action="/loginAdmin/cadastrarHospital" method="post">
+				<label for="nome">Nome:</label> 
+				<input type="text" name="nome" id="nome"><br> 
+				<label for="cnpj">CNPJ:</label> 
+				<input type="text" name="cnpj" id="cnpj"><br> 
+				<label for="endereco">Endereço:</label> 
+				<input type="text" name="endereco" id="endereco"><br> 
+				<label for="inscricaoEstadual">Inscrição estadual:</label> 
+				<input type="text" name="inscricaoEstadual" id="inscricaoEstadual"><br> 
+				<label for="telefone">Telefone:</label>
+				<input type="text" name="telefone" id="telefone"><br>
+				<button type="submit">Adicionar</button>
+			</form>
+			<th:block th:if="${hospitalEditavel != null}">
+				<h2>Editar hospital <span th:text="${hospitalEditavel.nome}"></span></h2>
+				<form action="/loginAdmin/cadastrarHospital" method="post">
+					<input type="hidden" name="codigo" th:value="${hospitalEditavel.codigo}"> 
+					<label for="nome">Nome:</label>
+					<input type="text" name="nome" id="nome" th:value="${hospitalEditavel.nome}"><br> 
+					<label for="cnpj">CNPJ:</label> 
+					<input type="text" name="cnpj" id="cnpj" th:value="${hospitalEditavel.cnpj}"><br> 
+					<label for="endereco">Endereço:</label> 
+					<input type="text" name="endereco" id="endereco" th:value="${hospitalEditavel.endereco}"><br> 
+					<label for="inscricaoEstadual">Inscrição estadual:</label> 
+					<input type="text" name="inscricaoEstadual" id="inscricaoEstadual" th:value="${hospitalEditavel.inscricaoEstadual}"><br>
+					<label for="telefone">Telefone:</label> 
+					<input type="text" name="telefone" id="telefone" th:value="${hospitalEditavel.telefone}"><br>
+					<button type="submit">Editar</button>
+				</form>
+			</th:block>
+			<h1>Lista de pacientes cadastrados</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>RG</th>
+						<th>Endereço</th>
+						<th>Nome da mãe</th>
+						<th>Nome do contato</th>
+						<!-- New -->
+						<th>Gênero</th>
+						<th>Data de nascimento</th>
+						<th>Órgão</th>
+						<th>Telefone</th>
+						<th>Data de transplante</th>
+						<th colspan="2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="paciente: ${pacientes}">
+						<tr>
+						<td th:text="${paciente.codigo}"></td>
+						<td th:text="${paciente.nome}"></td>
+						<td th:text="${paciente.rg}"></td>
+						<td th:text="${paciente.endereco}"></td>
+						<td th:text="${paciente.nomeMae}"></td>
+						<td th:text="${paciente.contato}"></td>
+						<td th:text="${paciente.genero}"></td>
+						<td th:text="${paciente.nascimentoFormatado}"></td>
+						<td th:text="${paciente.orgao}"></td>
+						<td th:text="${paciente.telefone}"></td>
+						<td th:text="${paciente.transplanteFormatado}"></td>
+						<td>
+							Editar
+						</td>
+						<td>
+							<form th:action="@{/loginAdmin/excluirPaciente}" method="post">
+								<input type="hidden" name="codigo" th:value="${paciente.codigo}">
+								<input type="submit" value="Deletar">
+							</form>
+						</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			
+			<h2>Cadastrar novo paciente</h2>
+			<div th:if="${msg2 != null}" th:text="${msg2}"></div>
+			<form action="/loginAdmin/cadastrarPaciente" method="post">
+				<label for="nome">Nome:</label> 
+				<input type="text" name="nome" id="nome"><br> 
+				<label for="rg">RG:</label> 
+				<input type="text" name="rg" id="rg"><br>
+				<label for="endereco">Endereço:</label> 
+				<input type="text" name="endereco" id="endereco"><br> 
+				<label for="contato">Nome do contato:</label> 
+				<input type="text" name="contato" id="contato"><br>
+				<label for="orgao">Órgão:</label> 
+				<input type="text" name="orgao" id="orgao"><br> 
+				<label for="nomeMae">Nome da mãe:</label> 
+				<input type="text" name="nomeMae" id="nomeMae"><br>
+				<label for="telefone">Telefone:</label> <input type="text" name="telefone" id="telefone"><br> 
+				<label for="nascimento">Data de nascimento</label> 
+				<input type="date" name="nascimento" id="nascimento" /><br>
+				<label for="transplante">Data do transplante</label> 
+				<input type="date" name="transplante" id="transplante" /><br>
+				<div>
+					<p>Gênero</p> 
+					<select name="genero">
+						<option value="Masculino">Masculino</option>
+						<option value="Feminino">Feminino</option>
+						<option value="Outros">Outros</option>
+					</select>
+				</div>
+				<button type="submit">Adicionar</button>
+			</form>
+			<h1>Lista de médicos cadastrados</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nome</th>
+						<th>CRM</th>
+						<th colspan="2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="medico: ${medicos}">
+						<tr>
+						<td th:text="${medico.codigo}"></td>
+						<td th:text="${medico.nome}"></td>
+						<td th:text="${medico.crm}"></td>
+						<td>
+							Editar
+						</td>
+						<td>
+							Deletar
+						</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			
+			<h2>Cadastrar novo médico</h2>
+			<div th:if="${msg3 != null}" th:text="${msg3}"></div>
+			<form action="/loginAdmin/cadastrarMedico" method="post">
+				<label for="nome">Nome:</label> 
+				<input type="text" name="nome" id="nome"><br> 
+				<label for="crm">CRM:</label> 
+				<input type="text" name="crm" id="crm"><br> 
+				<button type="submit">Adicionar</button>
+			</form>
+			<h1>Lista de monitoramentos</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>StatusAtivo</th>
+						<th>Descrição</th>
+						<th>Data fim</th>
+						<th>Frequência segundos</th>
+						<th>Data início</th>
+						<th>Hospital</th>
+						<th>Médico</th>
+						<th>Paciente</th>
+						<th colspan="2"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="monitoramento: ${monitoramentos}">
+						<tr>
+						<td th:text="${monitoramento.codigo}"></td>
+						<td th:text="${monitoramento.ativo}"></td>
+						<td th:text="${monitoramento.descricao}"></td>
+						<td th:text="${monitoramento.fimFormatado}"></td>
+						<td th:text="${monitoramento.frequenciaSegundos}"></td>
+						<td th:text="${monitoramento.inicioFormatado}"></td>
+						<td th:text="${monitoramento.hospital.nome}"></td>
+						<td th:text="${monitoramento.medico.nome}"></td>
+						<td th:text="${monitoramento.paciente.nome}"></td>
+						<td>
+							Editar
+						</td>
+						<td>
+							Deletar
+						</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+			<h2>Cadastrar novo monitoramento</h2>
+			<div th:if="${msg4 != null}" th:text="${msg4}"></div>
+			<form action="loginAdmin/cadastrarMonitoramento" method="post">
+				<label for="conclusao">Data de conclusão</label>
+				<input type="date" name="fim" id="conclusao"/><br>
+				<label for="freqseg">Qual será a frequência (em segundos) que o monitoramento ocorrerá?</label>
+				<input type="number" name="frequenciaSegundos" id="freqseg" /><br>
+				<label>Descrição do monitoramento</label>
+				<input type="text" name="descricao"/><br>
+				<div>
+				<label>Hospital:</label>
+				<select name="codigoHospital">
+					<th:block th:each="hospital: ${hospitais}">
+						<option th:value="${hospital.codigo}" th:text="${hospital.nome}"></option>
+					</th:block>
+				</select>
+				</div>
+				<div>
+					<label>Paciente:</label>
+					<select name="codigoPaciente">
+						<th:block th:each="paciente: ${pacientes}">
+							<option th:value="${paciente.codigo}" th:text="${paciente.nome}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div>
+					<label>Médico:</label>
+					<select name="codigoMedico">
+						<th:block th:each="medico: ${medicos}">
+							<option th:value="${medico.codigo}" th:text="${medico.nome}"></option>
+						</th:block>
+					</select>
+				</div><br>
+				<button type="submit">Adicionar</button>
+			</form>	
+		</main>
+	</div>
+	<footer class="border-top footer text-muted">
+		<div class="container">
+			<p>Capsule Dev &copy; 2020</p>
 		</div>
-		<button type="submit">Adicionar</button>
-	</form>
+	</footer>
 </body>
 </html>
