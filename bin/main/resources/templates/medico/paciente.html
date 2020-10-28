@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${paciente.nome}"></title>
+</head>
+<body>
+	<h1 th:text="${paciente.nome}"></h1>
+	<p>Data de nascimento: <span th:text="${paciente.nascimentoFormatado}"></span></p>
+	<p>Contato: <span th:text="${paciente.contato}"></span></p>
+	<p>Endereço: <span th:text="${paciente.endereco}"></span></p>
+	<p>Gênero: <span th:text="${paciente.genero}"></span></p>
+	<p>Nome da mãe: <span th:text="${paciente.nomeMae}"></span></p>
+	<p>Órgão: <span th:text="${paciente.orgao}"></span></p>
+	<p>RG: <span th:text="${paciente.rg}"></span></p>
+	<p>Telefone: <span th:text="${paciente.telefone}"></span></p>
+	<p>Data de transplante: <span th:text="${paciente.transplanteFormatado}"></span></p>
+	<h2>Lista de monitoramentos</h2>
+	<th:block th:each="monitoramento: ${paciente.monitoramentos}">
+		<form th:action="@{'/loginMedico/paciente/monitoramento/' + ${monitoramento.codigo}}" method="post">
+			<input type="submit" th:value="${monitoramento.codigo}">
+		</form>
+	</th:block>
+
+</body>
+</html>
