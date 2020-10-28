@@ -50,41 +50,6 @@ public class HomeController {
 		return "admin/login";
 	}
 	
-	/*
-	
-	@PostMapping("loginAdmin/cadastrarMonitoramentoAgora")
-	public String salvarMonitoramentoAgora(Monitoramento monitoramento, RedirectAttributes redirectAttributes) {
-		RestTemplate api = new RestTemplate();
-		String url = "https://capsuledevdigital01.herokuapp.com/paciente";
-		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
-		
-		redirectAttributes.addFlashAttribute("msg3", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
-		return "redirect:/loginAdmin";
-	}
-	*/
-	
-	@PostMapping("/loginMedico/editarCapsuleControl")
-	public String editarCapsuleControl(long codigo, Model model) {
-		/*
-		RestTemplate api = new RestTemplate();
-		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
-		
-		CapsuleControl capsuleControlEditavel = api.getForObject(url, CapsuleControl.class);
-		
-		redirectAttributes.addFlashAttribute("capsuleControlEditavel", capsuleControlEditavel);
-		return "redirect:/loginMedico";
-		*/
-		
-		RestTemplate api = new RestTemplate();
-		String url = "https://capsuledevdigital01.herokuapp.com/capsuleControl/" + codigo;
-		
-		CapsuleControl capsuleControl = api.getForObject(url, CapsuleControl.class);
-		
-		model.addAttribute("capsuleControl", capsuleControl);
-		
-		return "medico/editarCapsuleControl";
-	}
-	
 	public String formatadorData(Date date) {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));

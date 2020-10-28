@@ -15,10 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.fiap.capsuledev.domain.Hospital;
 
 @Controller
-@RequestMapping("/admin")
 public class HospitalController {
 
-	@GetMapping
+	@GetMapping("/admin")
 	public String index(Model model) {
 		RestTemplate api = new RestTemplate();
 		List<?> hospitais = api.getForObject("https://capsuledevdigital01.herokuapp.com/hospital", List.class);
