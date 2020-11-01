@@ -165,9 +165,10 @@
 				<input type="text" name="nomeMae" id="nomeMae"><br>
 				<label for="telefone">Telefone:</label> <input type="text" name="telefone" id="telefone"><br> 
 				<label for="nascimento">Data de nascimento</label> 
-				<input type="date" name="nascimento" id="nascimento" required/><br>
+				<input type="date" name="nascimento" id="nascimento" placeholder="mm-dd-yyyy" value=""
+        		min="1997-01-01" max="2030-12-31" required/><br>
 				<label for="transplante">Data do transplante</label> 
-				<input type="date" name="transplante" id="transplante" required/><br>
+				<input type="date" name="transplante" placeholder="mm-dd-yyyy" id="transplante" required/><br>
 				<div>
 					<p>Gênero</p> 
 					<select name="genero">
