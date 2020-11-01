@@ -2,12 +2,13 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title th:text="${paciente.nome}"></title>
 <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/webjars/font-awesome/css/font-awesome.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
+
 <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -32,33 +33,25 @@
     
     <div class="container">
 <main role="main" class="pb-3">
-    
-	<h1>Dados do monitoramento</h1>
-		<p>Código: <span th:text="${monitoramento.codigo}"></span></p>
-		<p>Paciente: <span th:text="${monitoramento.paciente.nome}"></span></p>
-		<p>Descrição: <span th:text="${monitoramento.descricao}"></span></p>
-		<p>Início do monitoramento: <span th:text="${monitoramento.inicioFormatado}"></span></p>
-		<p>Fim do monitoramento: <span th:text="${monitoramento.fimFormatado}"></span></p>
-		<p>Frequência do monitoramento: <span th:text="${monitoramento.frequenciaSegundos}"></span> segundos</p>
-		<p>Status: <span th:text="${status}"></span></p>
-	<h2>Relatórios do CapsuleWatch</h2>
-		<th:block th:each="capsuleWatch: ${monitoramento.listaCapsuleWatch}">
-			<p>Código: <span th:text="${capsuleWatch.codigo}"></span></p>
-			<p>Número de batimentos: <span th:text="${capsuleWatch.batimentos}"></span> BPM</p>
-			<p>Data: <span th:text="${capsuleWatch.dataFormatada}"></span></p>
-			<p>Hora: <span th:text="${capsuleWatch.horaFormatada}"></span></p>
-			<p>Temperatura: <span th:text="${capsuleWatch.temperatura}"></span>°C</p>
-			<p>Pressão: <span th:text="${capsuleWatch.pressao}"></span></p>
-		</th:block>
-	<h3>Receitas CapsuleControl</h3>
-		<th:block th:each="capsuleControl: ${monitoramento.listaCapsuleControl}">
-			<p>Código: <span th:text="${capsuleControl.codigo}"></span></p>
-			<p>Data: <span th:text="${capsuleControl.dataFormatada}"></span></p>
-			<p>Dosagem: <span th:text="${capsuleControl.dose}"></span></p>
-			<p>Medicamento: <span th:text="${capsuleControl.remedio}"></span></p>		
-		</th:block>
-		
-		</main>
+
+	<h1 th:text="${paciente.nome}"></h1>
+	<p>Data de nascimento: <span th:text="${paciente.nascimentoFormatado}"></span></p>
+	<p>Contato: <span th:text="${paciente.contato}"></span></p>
+	<p>Endereço: <span th:text="${paciente.endereco}"></span></p>
+	<p>Gênero: <span th:text="${paciente.genero}"></span></p>
+	<p>Nome da mãe: <span th:text="${paciente.nomeMae}"></span></p>
+	<p>Órgão: <span th:text="${paciente.orgao}"></span></p>
+	<p>RG: <span th:text="${paciente.rg}"></span></p>
+	<p>Telefone: <span th:text="${paciente.telefone}"></span></p>
+	<p>Data de transplante: <span th:text="${paciente.transplanteFormatado}"></span></p>
+	<h2>Lista de monitoramentos</h2>
+	<th:block th:each="monitoramento: ${paciente.monitoramentos}">
+		<form th:action="@{'/loginMedico/paciente/monitoramento/' + ${monitoramento.codigo}}" method="post">
+			<input type="submit" th:value="${monitoramento.codigo}">
+		</form>
+	</th:block>
+	
+	</main>
 	
 	</div>
 	<footer class="border-top footer text-muted">
@@ -66,5 +59,6 @@
            <p>Capsule Dev &copy; 2020</p>
         </div>
     </footer>
+
 </body>
 </html>

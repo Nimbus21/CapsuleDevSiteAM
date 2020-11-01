@@ -8,6 +8,7 @@
     <link th:href="@{/css/main.css}" rel="stylesheet" />
 </head>
 <body>
+
 <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -32,7 +33,7 @@
     
     <div class="container">
 <main role="main" class="pb-3">
-    
+
 	<h1>Dados do monitoramento</h1>
 		<p>Código: <span th:text="${monitoramento.codigo}"></span></p>
 		<p>Paciente: <span th:text="${monitoramento.paciente.nome}"></span></p>
@@ -49,16 +50,30 @@
 			<p>Hora: <span th:text="${capsuleWatch.horaFormatada}"></span></p>
 			<p>Temperatura: <span th:text="${capsuleWatch.temperatura}"></span>°C</p>
 			<p>Pressão: <span th:text="${capsuleWatch.pressao}"></span></p>
+			<p>IMC: <span th:text="${capsuleWatch.imc}"></span></p>
 		</th:block>
 	<h3>Receitas CapsuleControl</h3>
 		<th:block th:each="capsuleControl: ${monitoramento.listaCapsuleControl}">
 			<p>Código: <span th:text="${capsuleControl.codigo}"></span></p>
 			<p>Data: <span th:text="${capsuleControl.dataFormatada}"></span></p>
 			<p>Dosagem: <span th:text="${capsuleControl.dose}"></span></p>
-			<p>Medicamento: <span th:text="${capsuleControl.remedio}"></span></p>		
+			<p>Medicamento: <span th:text="${capsuleControl.remedio}"></span></p>
+			<form action="/loginMedico/editarCapsuleControl" method="post">
+				<input type="hidden" name="codigo" th:value="${capsuleControl.codigo}">
+				<input type="submit" value="Editar">
+			</form>	
+			<form action="/loginMedico/excluirCapsuleControl" method="post">
+				<input type="hidden" name="codigo" th:value="${capsuleControl.codigo}">
+				<input type="submit" value="Deletar">
+			</form>	
 		</th:block>
-		
-		</main>
+	
+	<form action="/loginMedico/monitoramento/cadastrarCapsuleControl" method="post">
+		<input type="hidden" name="codigo" th:value="${monitoramento.codigo}">
+		<input type="submit" value="Cadastrar CapsuleControl">
+	</form>
+	
+	</main>
 	
 	</div>
 	<footer class="border-top footer text-muted">
@@ -66,5 +81,6 @@
            <p>Capsule Dev &copy; 2020</p>
         </div>
     </footer>
+	
 </body>
 </html>

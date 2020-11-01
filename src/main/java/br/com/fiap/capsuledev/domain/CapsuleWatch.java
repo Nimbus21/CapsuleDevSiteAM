@@ -7,7 +7,6 @@ public class CapsuleWatch {
 	private Integer batimentos;
 	private Float temperatura;
 	private Float pressao;
-	private Float imc;
 	private Date dataHora;
 	private String dataFormatada;
 	private String horaFormatada;
@@ -36,12 +35,6 @@ public class CapsuleWatch {
 	}
 	public void setPressao(Float pressao) {
 		this.pressao = pressao;
-	}
-	public Float getImc() {
-		return imc;
-	}
-	public void setImc(Float imc) {
-		this.imc = imc;
 	}
 	public Date getDataHora() {
 		return dataHora;
