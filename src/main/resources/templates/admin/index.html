@@ -132,7 +132,10 @@
 						<td th:text="${paciente.telefone}"></td>
 						<td th:text="${paciente.transplanteFormatado}"></td>
 						<td>
-							Editar
+							<form th:action="@{/loginAdmin/editarPaciente}" method="post">
+								<input type="hidden" name="codigo" th:value="${paciente.codigo}">
+								<input type="submit" value="Editar">
+							</form>
 						</td>
 						<td>
 							<form th:action="@{/loginAdmin/excluirPaciente}" method="post">
@@ -162,9 +165,9 @@
 				<input type="text" name="nomeMae" id="nomeMae"><br>
 				<label for="telefone">Telefone:</label> <input type="text" name="telefone" id="telefone"><br> 
 				<label for="nascimento">Data de nascimento</label> 
-				<input type="date" name="nascimento" id="nascimento" /><br>
+				<input type="date" name="nascimento" id="nascimento" required/><br>
 				<label for="transplante">Data do transplante</label> 
-				<input type="date" name="transplante" id="transplante" /><br>
+				<input type="date" name="transplante" id="transplante" required/><br>
 				<div>
 					<p>Gênero</p> 
 					<select name="genero">
@@ -175,6 +178,39 @@
 				</div>
 				<button type="submit">Adicionar</button>
 			</form>
+			<th:block th:if="${pacienteEditavel != null}">
+				<h2>Editar paciente <span th:text="${pacienteEditavel.nome}"></span></h2>
+				<form action="/loginAdmin/cadastrarPaciente" method="post">
+					<input type="hidden" name="codigo" th:value="${pacienteEditavel.codigo}">
+					<label for="nome">Nome:</label>
+					<input type="text" name="nome" id="nome" th:value="${pacienteEditavel.nome}"><br> 
+					<label for="rg">RG:</label> 
+					<input type="text" name="rg" id="rg" th:value="${pacienteEditavel.rg}"><br>
+					<label for="endereco">Endereço:</label> 
+					<input type="text" name="endereco" id="endereco" th:value="${pacienteEditavel.endereco}"><br> 
+					<label for="contato">Nome do contato:</label> 
+					<input type="text" name="contato" id="contato" th:value="${pacienteEditavel.contato}"><br>
+					<label for="orgao">Órgão:</label> 
+					<input type="text" name="orgao" id="orgao" th:value="${pacienteEditavel.orgao}"><br> 
+					<label for="nomeMae">Nome da mãe:</label> 
+					<input type="text" name="nomeMae" id="nomeMae" th:value="${pacienteEditavel.nomeMae}"><br>
+					<label for="telefone">Telefone:</label> 
+					<input type="text" name="telefone" id="telefone" th:value="${pacienteEditavel.telefone}"><br> 
+					<label for="nascimento">Data de nascimento</label> 
+					<input type="date" name="nascimento" id="nascimento" th:value="${pacienteEditavel.nascimento}" required/><br>
+					<label for="transplante">Data do transplante</label>
+					<input type="date" name="transplante" id="transplante" th:value="${pacienteEditavel.transplante}" required/><br>
+					<div>
+						<p>Gênero</p> 
+						<select name="genero" th:value="${pacienteEditavel.genero}">
+							<option value="Masculino">Masculino</option>
+							<option value="Feminino">Feminino</option>
+							<option value="Outros">Outros</option>
+						</select>
+					</div>
+					<button type="submit">Adicionar</button>
+				</form>
+			</th:block>
 			<h1>Lista de médicos cadastrados</h1>
 			<table>
 				<thead>
@@ -192,7 +228,10 @@
 						<td th:text="${medico.nome}"></td>
 						<td th:text="${medico.crm}"></td>
 						<td>
-							Editar
+							<form th:action="@{/loginAdmin/editarMedico}" method="post">
+								<input type="hidden" name="codigo" th:value="${medico.codigo}">
+								<input type="submit" value="Editar">
+							</form>
 						</td>
 						<td>
 							Deletar
@@ -243,7 +282,10 @@
 							Editar
 						</td>
 						<td>
-							Deletar
+							<form th:action="@{/loginAdmin/excluirMonitoramento}" method="post">
+								<input type="hidden" name="codigo" th:value="${monitoramento.codigo}">
+								<input type="submit" value="Deletar">
+							</form>
 						</td>
 						</tr>
 					</th:block>

@@ -3,6 +3,8 @@ package br.com.fiap.capsuledev.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.springframework.stereotype.Controller;
@@ -105,6 +107,21 @@ public class MonitoramentoController {
 		Monitoramento monitoramentoResultado = api.postForObject(url, monitoramento, Monitoramento.class);
 		
 		redirectAttributes.addFlashAttribute("msg4", String.format("Monitoramento \"%s\" cadastrado com sucesso!", monitoramentoResultado.getCodigo()));
+		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginAdmin/excluirMonitoramento")
+	public String deletarMonitoramento(long codigo, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("id", String.valueOf(codigo));
+		
+		String url = "https://capsuledevdigital01.herokuapp.com/monitoramento/{id}";
+		
+		System.out.println("MonitoramentoDelete: " + url);
+		api.delete(url, params);
+		
 		return "redirect:/loginAdmin";
 	}
 

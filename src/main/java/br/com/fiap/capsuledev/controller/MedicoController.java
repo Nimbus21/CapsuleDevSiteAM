@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.fiap.capsuledev.domain.Medico;
+import br.com.fiap.capsuledev.domain.Paciente;
 import br.com.fiap.capsuledev.domain.site.Usuario;
 
 @Controller
@@ -49,6 +50,18 @@ public class MedicoController {
 		Medico medicoResultado = api.postForObject(url, medico, Medico.class);
 		
 		redirectAttributes.addFlashAttribute("msg3", String.format("Médico \"%s\" cadastrado com sucesso!", medicoResultado.getNome()));
+		return "redirect:/loginAdmin";
+	}
+	
+	@PostMapping("/loginAdmin/editarMedico")
+	public String editarMedico(long codigo, RedirectAttributes redirectAttributes) {
+		
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/medico/" + codigo;
+		
+		Medico medicoEditavel = api.getForObject(url, Medico.class);
+		
+		redirectAttributes.addFlashAttribute("medicoEditavel", medicoEditavel);
 		return "redirect:/loginAdmin";
 	}
 }

@@ -85,6 +85,18 @@ public class PacienteController {
 		return "redirect:/loginAdmin";
 	}
 	
+	@PostMapping("/loginAdmin/editarPaciente")
+	public String editarPaciente(long codigo, RedirectAttributes redirectAttributes) {
+		
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/paciente/" + codigo;
+		
+		Paciente pacienteEditavel = api.getForObject(url, Paciente.class);
+		
+		redirectAttributes.addFlashAttribute("pacienteEditavel", pacienteEditavel);
+		return "redirect:/loginAdmin";
+	}
+	
 	@PostMapping("/loginAdmin/excluirPaciente")
 	public String deletarPaciente(long codigo, RedirectAttributes redirectAttributes) {
 		RestTemplate api = new RestTemplate();
