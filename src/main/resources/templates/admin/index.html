@@ -236,7 +236,10 @@
 							</form>
 						</td>
 						<td>
-							Deletar
+							<form th:action="@{/loginAdmin/excluirMedico}" method="post">
+								<input type="hidden" name="codigo" th:value="${medico.codigo}">
+								<input type="submit" value="Deletar">
+							</form>
 						</td>
 						</tr>
 					</th:block>

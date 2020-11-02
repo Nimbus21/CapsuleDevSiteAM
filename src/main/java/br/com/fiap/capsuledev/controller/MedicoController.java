@@ -1,6 +1,8 @@
 package br.com.fiap.capsuledev.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +64,23 @@ public class MedicoController {
 		Medico medicoEditavel = api.getForObject(url, Medico.class);
 		
 		redirectAttributes.addFlashAttribute("medicoEditavel", medicoEditavel);
+		return "redirect:/loginAdmin";
+	}
+	
+	
+	
+	@PostMapping("/loginAdmin/excluirMedico")
+	public String deletarMedico(long codigo, RedirectAttributes redirectAttributes) {
+		RestTemplate api = new RestTemplate();
+		
+		Map<String, String> params = new HashMap<>();
+		params.put("id", String.valueOf(codigo));
+		
+		String url = "https://capsuledevdigital01.herokuapp.com/medico/{id}";
+		
+		api.delete(url, params);
+		
+		redirectAttributes.addFlashAttribute("msg3", "Médico excluído com sucesso!");
 		return "redirect:/loginAdmin";
 	}
 }
