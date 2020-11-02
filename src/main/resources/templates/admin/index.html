@@ -154,7 +154,7 @@
 				<label for="nome">Nome:</label> 
 				<input type="text" name="nome" id="nome"><br> 
 				<label for="rg">RG:</label> 
-				<input type="text" name="rg" id="rg"><br>
+				<input type="text" name="rg" id="rg" maxlength="11"><br>
 				<label for="endereco">Endereço:</label> 
 				<input type="text" name="endereco" id="endereco"><br> 
 				<label for="contato">Nome do contato:</label> 
@@ -163,7 +163,8 @@
 				<input type="text" name="orgao" id="orgao"><br> 
 				<label for="nomeMae">Nome da mãe:</label> 
 				<input type="text" name="nomeMae" id="nomeMae"><br>
-				<label for="telefone">Telefone:</label> <input type="text" name="telefone" id="telefone"><br> 
+				<label for="telefone">Telefone:</label> 
+				<input type="text" name="telefone" id="telefone" maxlength="14"><br> 
 				<label for="nascimento">Data de nascimento</label> 
 				<input type="date" name="nascimento" id="nascimento" placeholder="mm-dd-yyyy" value=""
         		min="1997-01-01" max="2030-12-31" required/><br>
@@ -186,7 +187,7 @@
 					<label for="nome">Nome:</label>
 					<input type="text" name="nome" id="nome" th:value="${pacienteEditavel.nome}"><br> 
 					<label for="rg">RG:</label> 
-					<input type="text" name="rg" id="rg" th:value="${pacienteEditavel.rg}"><br>
+					<input type="text" name="rg" id="rg" maxlength="11" th:value="${pacienteEditavel.rg}"><br>
 					<label for="endereco">Endereço:</label> 
 					<input type="text" name="endereco" id="endereco" th:value="${pacienteEditavel.endereco}"><br> 
 					<label for="contato">Nome do contato:</label> 
@@ -196,7 +197,7 @@
 					<label for="nomeMae">Nome da mãe:</label> 
 					<input type="text" name="nomeMae" id="nomeMae" th:value="${pacienteEditavel.nomeMae}"><br>
 					<label for="telefone">Telefone:</label> 
-					<input type="text" name="telefone" id="telefone" th:value="${pacienteEditavel.telefone}"><br> 
+					<input type="text" name="telefone" id="telefone" maxlength="14" th:value="${pacienteEditavel.telefone}"><br> 
 					<label for="nascimento">Data de nascimento</label> 
 					<input type="date" name="nascimento" id="nascimento" th:value="${pacienteEditavel.nascimento}" required/><br>
 					<label for="transplante">Data do transplante</label>
@@ -251,6 +252,16 @@
 				<input type="text" name="crm" id="crm"><br> 
 				<button type="submit">Adicionar</button>
 			</form>
+			<th:block th:if="${medicoEditavel != null}">
+				<h2>Editar médico <span th:text="${medicoEditavel.nome}"></span></h2>
+				<form action="/loginAdmin/cadastrarMedico" method="post">
+					<label for="nome">Nome:</label> 
+					<input type="text" name="nome" id="nome" th:value="${medicoEditavel.nome}"><br> 
+					<label for="crm">CRM:</label> 
+					<input type="text" name="crm" id="crm" th:value="${medicoEditavel.crm}"><br> 
+					<button type="submit">Editar</button>
+				</form>
+			</th:block>
 			<h1>Lista de monitoramentos</h1>
 			<table>
 				<thead>
