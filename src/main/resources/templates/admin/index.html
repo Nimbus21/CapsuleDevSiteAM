@@ -72,13 +72,13 @@
 				<label for="nome">Nome:</label> 
 				<input type="text" name="nome" id="nome"><br> 
 				<label for="cnpj">CNPJ:</label> 
-				<input type="text" name="cnpj" id="cnpj"><br> 
+				<input type="text" name="cnpj" id="cnpj" maxlenght="14"><br> 
 				<label for="endereco">Endereço:</label> 
 				<input type="text" name="endereco" id="endereco"><br> 
 				<label for="inscricaoEstadual">Inscrição estadual:</label> 
 				<input type="text" name="inscricaoEstadual" id="inscricaoEstadual"><br> 
 				<label for="telefone">Telefone:</label>
-				<input type="text" name="telefone" id="telefone"><br>
+				<input type="text" name="telefone" id="telefone" maxlength="10"><br>
 				<button type="submit">Adicionar</button>
 			</form>
 			<th:block th:if="${hospitalEditavel != null}">
@@ -88,13 +88,13 @@
 					<label for="nome">Nome:</label>
 					<input type="text" name="nome" id="nome" th:value="${hospitalEditavel.nome}"><br> 
 					<label for="cnpj">CNPJ:</label> 
-					<input type="text" name="cnpj" id="cnpj" th:value="${hospitalEditavel.cnpj}"><br> 
+					<input type="text" name="cnpj" id="cnpj" maxlength="14" th:value="${hospitalEditavel.cnpj}"><br> 
 					<label for="endereco">Endereço:</label> 
 					<input type="text" name="endereco" id="endereco" th:value="${hospitalEditavel.endereco}"><br> 
 					<label for="inscricaoEstadual">Inscrição estadual:</label> 
 					<input type="text" name="inscricaoEstadual" id="inscricaoEstadual" th:value="${hospitalEditavel.inscricaoEstadual}"><br>
 					<label for="telefone">Telefone:</label> 
-					<input type="text" name="telefone" id="telefone" th:value="${hospitalEditavel.telefone}"><br>
+					<input type="text" name="telefone" id="telefone" maxlength="14" th:value="${hospitalEditavel.telefone}"><br>
 					<button type="submit">Editar</button>
 				</form>
 			</th:block>
@@ -164,7 +164,7 @@
 				<label for="nomeMae">Nome da mãe:</label> 
 				<input type="text" name="nomeMae" id="nomeMae"><br>
 				<label for="telefone">Telefone:</label> 
-				<input type="text" name="telefone" id="telefone" maxlength="14"><br> 
+				<input type="text" name="telefone" id="telefone" maxlength="10"><br> 
 				<label for="nascimento">Data de nascimento</label> 
 				<input type="date" name="nascimento" id="nascimento" placeholder="mm-dd-yyyy" value=""
         		min="1997-01-01" max="2030-12-31" required/><br>
@@ -197,7 +197,7 @@
 					<label for="nomeMae">Nome da mãe:</label> 
 					<input type="text" name="nomeMae" id="nomeMae" th:value="${pacienteEditavel.nomeMae}"><br>
 					<label for="telefone">Telefone:</label> 
-					<input type="text" name="telefone" id="telefone" maxlength="14" th:value="${pacienteEditavel.telefone}"><br> 
+					<input type="text" name="telefone" id="telefone" maxlength="10" th:value="${pacienteEditavel.telefone}"><br> 
 					<label for="nascimento">Data de nascimento</label> 
 					<input type="date" name="nascimento" id="nascimento" th:value="${pacienteEditavel.nascimento}" required/><br>
 					<label for="transplante">Data do transplante</label>
@@ -295,7 +295,10 @@
 						<td th:text="${monitoramento.medico.nome}"></td>
 						<td th:text="${monitoramento.paciente.nome}"></td>
 						<td>
-							Editar
+							<form th:action="@{/loginAdmin/editarMonitoramento}" method="post">
+								<input type="hidden" name="codigo" th:value="${monitoramento.codigo}">
+								<input type="submit" value="Editar">
+							</form>
 						</td>
 						<td>
 							<form th:action="@{/loginAdmin/excluirMonitoramento}" method="post">
@@ -341,7 +344,45 @@
 					</select>
 				</div><br>
 				<button type="submit">Adicionar</button>
-			</form>	
+			</form>
+			<th:block th:if="${monitoramentoEditavel != null}">
+				<h2>Editar monitoramento</h2>
+				<form action="loginAdmin/cadastrarMonitoramento" method="post">
+				<input type="hidden" name="codigo" th:value="${monitoramentoEditavel.codigo}">
+				<label for="conclusao">Data de conclusão</label>
+				<input type="date" name="fim" id="conclusao"/><br>
+				<label for="freqseg">Qual será a frequência (em segundos) que o monitoramento ocorrerá?</label>
+				<input type="number" name="frequenciaSegundos" id="freqseg" th:value="${monitoramentoEditavel.frequenciaSegundos}"/><br>
+				<label>Descrição do monitoramento</label>
+				<input type="text" name="descricao" th:value="${monitoramentoEditavel.descricao}"/><br>
+				<div>
+				<label>Hospital:</label>
+				<select name="codigoHospital" th:value="${monitoramentoEditavel.hospital.nome}">
+					<th:block th:each="hospital: ${hospitais}">
+						<option th:value="${hospital.codigo}" th:text="${hospital.nome}"></option>
+					</th:block>
+				</select>
+				</div>
+				<div>
+					<label>Paciente:</label>
+					<select name="codigoPaciente" th:value="${monitoramentoEditavel.paciente.nome}">
+						<th:block th:each="paciente: ${pacientes}">
+							<option th:value="${paciente.codigo}" th:text="${paciente.nome}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div>
+					<label>Médico:</label>
+					<select name="codigoMedico">
+						<th:block th:each="medico: ${medicos}">
+							<option th:value="${medico.codigo}" th:text="${medico.nome}"></option>
+						</th:block>
+					</select>
+				</div><br>
+				<button type="submit">Editar</button>
+					
+				</form>
+			</th:block>
 		</main>
 	</div>
 	<footer class="border-top footer text-muted">

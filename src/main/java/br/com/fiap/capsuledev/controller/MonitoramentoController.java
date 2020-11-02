@@ -125,4 +125,15 @@ public class MonitoramentoController {
 		return "redirect:/loginAdmin";
 	}
 
+	@PostMapping("/loginAdmin/editarMonitoramento")
+	public String editarMonitoramento(long codigo, RedirectAttributes redirectAttributes) {
+		
+		RestTemplate api = new RestTemplate();
+		String url = "https://capsuledevdigital01.herokuapp.com/monitoramento/" + codigo;
+		
+		Monitoramento monitoramentoEditavel = api.getForObject(url, Monitoramento.class);
+		
+		redirectAttributes.addFlashAttribute("monitoramentoEditavel", monitoramentoEditavel);
+		return "redirect:/loginAdmin";
+	}
 }
