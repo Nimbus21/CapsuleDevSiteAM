@@ -258,6 +258,7 @@
 			<th:block th:if="${medicoEditavel != null}">
 				<h2>Editar médico <span th:text="${medicoEditavel.nome}"></span></h2>
 				<form action="/loginAdmin/cadastrarMedico" method="post">
+					<input type="hidden" name="codigo" th:value="${medicoEditavel.codigo}">
 					<label for="nome">Nome:</label> 
 					<input type="text" name="nome" id="nome" th:value="${medicoEditavel.nome}"><br> 
 					<label for="crm">CRM:</label> 
