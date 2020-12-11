@@ -1,4 +1,3 @@
 # CapsuleDevSiteAM
 
-Site deployado: https://amcapsuledevsite.herokuapp.com/
-A aplicação consome o web service em https://capsuledevdigital01.herokuapp.com/
+Aplicação cliente consumindo webservice do projeto Nac01-2Sem-Digital com deploy em: https://capsuledevdigital01.herokuapp.com/
